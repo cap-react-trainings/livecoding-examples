@@ -1,0 +1,8 @@
+.button-list {
+  display: flex;
+  gap: 12px;
+}
+
+.button {
+  background-color: #AD1457;
+}
