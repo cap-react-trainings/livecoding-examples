@@ -1,7 +1,5 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import * as yup from "yup";
+import { useForm, SubmitHandler, FormState } from "react-hook-form";
 
 type IFormInput = {
   firstName: string;
@@ -9,52 +7,54 @@ type IFormInput = {
   age: number;
 };
 
-// const schema = yup
-//   .object({
-//     firstName: yup.string().min(5),
-//     lastName: yup.string().required(),
-//     age: yup.number().positive().integer(),
-//   })
-//   .required();
-
-// const schema: yup.ObjectSchema<IFormInput> = yup.object().shape({
-//     firstName: yup.string().min(5, "Your name is too short 🫠!"),
-//     lastName: yup.string().required("Last name required"),
-//     age: yup.number().positive().integer("Input must be a positive number"),
-//   });
+const getHelperTextFirstName = ({ errors }: FormState<IFormInput>) => {
+  const errorType = errors.firstName?.type;
+  switch (errorType) {
+    case "maxLength":
+      return "Use no more than 10 characters";
+    case "minLength":
+      return "Use at least 5 characters";
+    case "required":
+      return "Please enter a name";
+    default:
+      return "your input is valid";
+  }
+};
 
 const ExampleUseForm: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<IFormInput>();
+  const { register, handleSubmit, formState, setValue } = useForm<IFormInput>({
+    reValidateMode: "onChange",
+    mode: "onChange",
+    criteriaMode: "all",
+  });
+
+  const helperText = getHelperTextFirstName(formState);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
-  // useEffect(() => {
-  //   setError("firstName", {
-  //     type: "manual",
-  //     message: "Your name is too short 🫠!",
-  //   });
-  // },[setError])
-
-  console.log(watch("firstName"));
+  const { ref, ...rest } = register("firstName", {
+    required: true,
+    maxLength: 15,
+    minLength: 5,
+    onBlur: (e) => setValue("firstName", e.target.value),
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="useForm">
       <label htmlFor="fname">First Name:</label>
       <input
         id="fname"
-        {...(register("firstName"), { minLength: 5, required: true })}
+        {...rest}
+        ref={(e) => {
+          ref(e);
+        }}
       />
+      <small style={{ color: "#f94449" }}>{helperText}</small>
       <label htmlFor="lname">Last Name:</label>
-      <input id="lname" {...(register("lastName"), { required: true })} />
-      {errors.lastName && <span>Input required</span>}
+      <input id="lname" {...register("lastName")} />
       <label htmlFor="age">Age:</label>
       <input id="age" {...register("age")} />
-      <input type="submit" />
+      <input className="submitButton" type="submit" />
     </form>
   );
 };

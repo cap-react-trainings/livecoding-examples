@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <p>App for demonstrating some live coding examples</p>
+      <h1>App for demonstrating some live coding examples</h1>
       {/** Chapter 2 - React in a Nutshell */}
       {/* <ClickButton */}
       {/* <FromatDiv /> */}
@@ -28,19 +28,17 @@ function App() {
       {/* <UseStateExample />
       <UseEffectExampleContainer /> */}
 
-      {/** Chapter 6 - Context 
+      {/** Chapter 6 - Context
        * ContextProvider is set in main.tsx
-      */}
-        <ContextUser />
+       */}
+      {/* <ContextUser /> */}
 
-      {/** Chapter 7 - Routing 
+      {/** Chapter 7 - Routing
        * pls see main.tsx
-      */}
+       */}
 
       {/** Chapter 8 - Forms*/}
       <ExampleUseForm />
-
-
     </>
   );
 }
