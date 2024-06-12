@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler, FormState } from "react-hook-form";
 
 type IFormInput = {
   firstName: string;
   lastName: string;
-  age: number;
+  age: string;
 };
 
 const getHelperTextFirstName = ({ errors }: FormState<IFormInput>) => {
@@ -17,15 +17,20 @@ const getHelperTextFirstName = ({ errors }: FormState<IFormInput>) => {
     case "required":
       return "Please enter a name";
     default:
-      return "your input is valid";
+      return "";
   }
 };
 
 const ExampleUseForm: React.FC = () => {
-  const { register, handleSubmit, formState, setValue } = useForm<IFormInput>({
+  const { register, handleSubmit, formState } = useForm<IFormInput>({
     reValidateMode: "onChange",
     mode: "onChange",
     criteriaMode: "all",
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      age: "",
+    },
   });
 
   const helperText = getHelperTextFirstName(formState);
@@ -36,7 +41,6 @@ const ExampleUseForm: React.FC = () => {
     required: true,
     maxLength: 15,
     minLength: 5,
-    onBlur: (e) => setValue("firstName", e.target.value),
   });
 
   return (
@@ -51,7 +55,7 @@ const ExampleUseForm: React.FC = () => {
       />
       <small style={{ color: "#f94449" }}>{helperText}</small>
       <label htmlFor="lname">Last Name:</label>
-      <input id="lname" {...register("lastName")} />
+      <input id="lname" {...register("lastName", { required: true })} />
       <label htmlFor="age">Age:</label>
       <input id="age" {...register("age")} />
       <input className="submitButton" type="submit" />
