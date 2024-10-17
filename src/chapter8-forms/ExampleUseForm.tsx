@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm, SubmitHandler, FormState } from "react-hook-form";
 
 type IFormInput = {
