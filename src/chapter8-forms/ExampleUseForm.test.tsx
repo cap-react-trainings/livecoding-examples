@@ -1,18 +1,21 @@
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor } from "@testing-library/react";
 import ExampleUseForm from "./ExampleUseForm";
 
+const user = userEvent.setup();
+
 describe("ExampleUseForm", () => {
-  it("renders the form correctly", () => {
+  it("renders the form correctly", async () => {
     render(<ExampleUseForm />);
     
     // Check for form elements by label text
-    expect(screen.getByLabelText(/First Name:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Last Name:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Age:/i)).toBeInTheDocument();
+    expect(await screen.findByText(/First Name:/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Last Name:/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Age:/i)).toBeInTheDocument();
     
     // Check for the submit button
-    const submitButton = screen.getByRole("button", { name: /submit/i });
+    const submitButton = await screen.findByRole("button", { name: /submit/i });
     expect(submitButton).toBeInTheDocument();
   });
 
@@ -20,27 +23,28 @@ describe("ExampleUseForm", () => {
     render(<ExampleUseForm />);
 
     // Find First Name input and submit button
-    const firstNameInput = screen.getByLabelText(/First Name:/i);
-    const submitButton = screen.getByRole("button", { name: /submit/i });
+    const firstNameInput = await screen.findByLabelText(/First Name:/i);
+    const submitButton = await screen.findByRole("button", { name: /submit/i });
 
     // Attempt to submit without entering a name
-    fireEvent.click(submitButton);
+    await user.click(submitButton);
 
     await waitFor(() => {
       expect(screen.getByText("Please enter a name")).toBeInTheDocument();
     });
 
     // Enter a short name to trigger minLength validation
-    fireEvent.change(firstNameInput, { target: { value: "Tom" } });
-    fireEvent.click(submitButton);
+    await user.clear(firstNameInput);
+    await user.type(firstNameInput, "Tom");
+    await user.click(submitButton);
 
     await waitFor(() => {
       expect(screen.getByText("Use at least 5 characters")).toBeInTheDocument();
     });
 
     // Enter a long name to trigger maxLength validation
-    fireEvent.change(firstNameInput, { target: { value: "VeryLongFirstName" } });
-    fireEvent.click(submitButton);
+    await user.clear(firstNameInput);
+    await user.type(firstNameInput, "VeryLongFirstName");
 
     await waitFor(() => {
       expect(screen.getByText("Use no more than 10 characters")).toBeInTheDocument();
@@ -51,13 +55,17 @@ describe("ExampleUseForm", () => {
     render(<ExampleUseForm />);
 
     // Fill out form inputs with valid data
-    fireEvent.change(screen.getByLabelText(/First Name:/i), { target: { value: "John" } });
-    fireEvent.change(screen.getByLabelText(/Last Name:/i), { target: { value: "Doe" } });
-    fireEvent.change(screen.getByLabelText(/Age:/i), { target: { value: "25" } });
+    const firstNameInput = await screen.findByLabelText(/First Name:/i);
+    const lastNameInput = await screen.findByLabelText(/Last Name:/i);
+    const ageInput = await screen.findByLabelText(/Age:/i);
+    
+    await user.type(firstNameInput, "Maxim");
+    await user.type(lastNameInput, "Mustermann");
+    await user.type(ageInput, "25");
 
     // Find and click the submit button
-    const submitButton = screen.getByRole("button", { name: /submit/i });
-    fireEvent.click(submitButton);
+    const submitButton = await screen.findByRole("button", { name: /submit/i });
+    await user.click(submitButton);
 
     // Since there's no actual onSubmit output, we can just check that no error message is shown
     await waitFor(() => {
