@@ -20,7 +20,7 @@ const getHelperTextFirstName = ({ errors }: FormState<IFormInput>) => {
   }
 };
 
-const ExampleUseForm: React.FC = () => {
+const ExampleUseForm = () => {
   const { register, handleSubmit, formState } = useForm<IFormInput>({
     reValidateMode: "onChange",
     mode: "onChange",

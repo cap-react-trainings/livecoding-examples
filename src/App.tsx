@@ -8,6 +8,7 @@ import UseStateExample from './chapter5-hooks_databinding/UseStateExample';
 import ContextUser from './chapter6-context/ContextUser';
 import { UserContextProvider } from './chapter6-context/UserContext';
 import ExampleUseForm from "./chapter8-forms/ExampleUseForm"
+import SetupStorybook from "./chapter9-storybook/SetupStorybook";
 
 function App() {
 
@@ -38,7 +39,10 @@ function App() {
        */}
 
       {/** Chapter 8 - Forms*/}
-      <ExampleUseForm />
+      {/* <ExampleUseForm /> */}
+
+      {/** Chapter 9 - Storybook Setup */}
+      <SetupStorybook />
     </>
   );
 }
