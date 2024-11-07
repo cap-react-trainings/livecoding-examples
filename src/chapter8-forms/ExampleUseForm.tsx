@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm, SubmitHandler, FormState } from "react-hook-form";
 
 type IFormInput = {
@@ -21,7 +20,7 @@ const getHelperTextFirstName = ({ errors }: FormState<IFormInput>) => {
   }
 };
 
-const ExampleUseForm: React.FC = () => {
+const ExampleUseForm = () => {
   const { register, handleSubmit, formState } = useForm<IFormInput>({
     reValidateMode: "onChange",
     mode: "onChange",
