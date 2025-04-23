@@ -4,7 +4,10 @@ const SetupStorybook = () => {
       <h2>Storybook Setup is quite straight forward!</h2>
       <p>
         Just follow the{" "}
-        <a href="https://storybook.js.org/docs/get-started/frameworks/react-vite">
+        <a
+          target="_blank"
+          href="https://storybook.js.org/docs/get-started/frameworks/react-vite"
+        >
           Docs
         </a>
         . They will also provide basic examples and do some setup for you.
@@ -14,7 +17,7 @@ const SetupStorybook = () => {
        * Afterwards take a look into the example stories: Show parameters, args, rendering etc.
        * Example for our Book-List is also provided.
        */}
-      <code>npx storybook@latest init</code>
+      <code>npm create storybook@latest</code>
     </div>
   );
 };

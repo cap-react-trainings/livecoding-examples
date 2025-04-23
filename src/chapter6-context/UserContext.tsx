@@ -29,9 +29,7 @@ export const UserContextProvider = (props: { children: React.ReactNode }) => {
     });
   }, []);
 
-  return (
-    <UserContext.Provider value={state}>{props.children}</UserContext.Provider>
-  );
+  return <UserContext value={state}>{props.children}</UserContext>;
 };
 
 export const useUser = (): UserData => {

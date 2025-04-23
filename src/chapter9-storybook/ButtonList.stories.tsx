@@ -4,8 +4,6 @@ import ButtonList from "../chapter3-components_styling/ButtonList";
 const meta = {
   title: "ButtonList",
   component: ButtonList,
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ["autodocs"],
 } satisfies Meta<typeof ButtonList>;
 
 export default meta;

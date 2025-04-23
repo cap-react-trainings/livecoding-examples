@@ -16,7 +16,7 @@ function App() {
     <>
       <h1>App for demonstrating some live coding examples</h1>
       {/** Chapter 2 - React in a Nutshell */}
-      {/* <ClickButton */}
+      <ClickButton />
       {/* <FromatDiv /> */}
 
       {/** Chapter 3 - Props and styling */}
@@ -39,10 +39,10 @@ function App() {
        */}
 
       {/** Chapter 8 - Forms*/}
-      {/* <ExampleUseForm /> */}
+      <ExampleUseForm />
 
       {/** Chapter 9 - Storybook Setup */}
-      <SetupStorybook />
+      {/* <SetupStorybook /> */}
     </>
   );
 }
